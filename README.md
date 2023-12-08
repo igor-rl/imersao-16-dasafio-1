@@ -50,7 +50,7 @@ Precisamos rodar o comando go run main.go ./arquivo-origem.csv ./arquivo-destino
 
 [![GitHub](https://img.shields.io/badge/GitHub-Igor_Lage-blue?style=social&logo=github)](https://github.com/igor-rl) 
 
-![Static Badge](https://img.shields.io/badge/07--12--2023-black)
+![Static Badge](https://img.shields.io/badge/08--12--2023-black)
 
 
 </div>

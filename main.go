@@ -27,8 +27,8 @@ func (p PorNome) Less(i, j int) bool {
 		return strings.ToLower(p[i].Nome) < strings.ToLower(p[j].Nome)
 	}
 
-	// Critério 2: idade menor
-	return p[i].Idade < p[j].Idade
+	// Critério 2: nome
+	return p[i].Nome < p[j].Nome
 }
 
 // LerArquivo lê o arquivo CSV e retorna um slice de Entidade
@@ -57,8 +57,16 @@ func LerArquivo(nomeArquivo string) ([]Entidade, error) {
 			continue
 		}
 
-		idade, _ := strconv.Atoi(linha[1])
-		pontuacao, _ := strconv.Atoi(linha[2])
+		idade, err := strconv.Atoi(linha[1])
+		if err != nil {
+			return nil, fmt.Errorf("erro ao converter idade para número na linha %d: %v", i+1, err)
+		}
+
+		pontuacao, err := strconv.Atoi(linha[2])
+		if err != nil {
+			return nil, fmt.Errorf("erro ao converter pontuação para número na linha %d: %v", i+1, err)
+		}
+
 		entidade := Entidade{Nome: linha[0], Idade: idade, Pontuacao: pontuacao}
 		entidades = append(entidades, entidade)
 	}
@@ -109,7 +117,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Ordenar por nome (considerando letras minúsculas) e, em seguida, por idade
+	// Ordenar por nome (considerando letras minúsculas) e, em seguida, por nome
 	sort.Sort(PorNome(entidades))
 	if err := EscreverArquivo(arquivoDestino, entidades); err != nil {
 		fmt.Printf("Erro ao escrever o arquivo ordenado: %v\n", err)
